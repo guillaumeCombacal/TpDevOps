@@ -1,0 +1,31 @@
+---
+
+tasks:
+    - name: Install pip & virtualenv
+    apt: name={{ item }}
+    with_items:
+      - python-pip
+      - virtualenv
+
+- name: Install flask
+  pip: name=flask
+
+- name: Virtualenv for flask
+  file: >
+      path=~/{{ flaskApp }}
+      owner=vagrant
+      group=vagrant
+      mode=0755
+      state=directory
+
+- name: Virtualenv for flask app
+  command: virtualenv {{ flaskApp }}env chdir=~/{{ flaskApp }}
+
+- name: Activate environment for flask app
+  become: yes
+  command: ~/{{ flaskApp }}/{{ flaskApp }}env/bin/activate
+
+- name: Launch flask using gunicorn
+  command: gunicorn --bind {{ ip }} wsgi --chdir /home/vagrant/{{ flaskApp }}
+
+...

@@ -1,0 +1,14 @@
+---
+- name: Initialisation hosts (for all) & remote_user --> root
+  hosts: web
+  remote_user: root
+
+- name: "Installation modules: nginx, sqlite, supervisord, gunicorn, flask"
+  roles:
+    - role: ansible-nginx
+    - role: ansible-sqlite
+    - role: ansible-supervisord
+    - role: ansible-gunicorn
+    - role: ansible-flask
+...
+

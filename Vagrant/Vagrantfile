@@ -1,0 +1,25 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+#Vagrant file to deploy configuration & application
+
+Vagrant.configure("2") do |config|
+
+#Specification VM
+  config.vm.box = "debian/jessie64"
+
+  config.vm.provision "file", source: "../ApplicationFlask", destination: "."
+    
+ #Config network with same port that flask application
+  config.vm.network "forwarded_port", guest: 5000, host: 5000
+
+#Launch installation with playbook.yml file
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "../Ansible/playbook.yml"
+    ansible.sudo = true
+      
+  end
+
+end
+
+

@@ -1,0 +1,5 @@
+---
+# Ip for application
+ip: 0.0.0.0:5000
+# Name flask application
+flaskApp: flaskApp
